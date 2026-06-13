@@ -21,20 +21,24 @@
 
 
 // ===== 北京时钟 =====
-function updateBeijingClock() {
-  const clockEl = document.getElementById('beijingClock');
-  if (!clockEl) return;
-  
+function getBeijingTime() {
   const now = new Date();
-  // 转换为北京时间 (UTC+8)
-  const utc = now.getTime() + now.getTimezoneOffset() * 60000;
-  const beijing = new Date(utc + 8 * 3600000);
+  const utcMs = now.getTime() + now.getTimezoneOffset() * 60000;
+  return new Date(utcMs + 8 * 3600000);
+}
+
+function updateBeijingClock() {
+  const clockTime = document.getElementById('clockTime');
+  const clockDate = document.getElementById('clockDate');
+  if (!clockTime || !clockDate) return;
+  
+  const beijing = getBeijingTime();
   
   const h = String(beijing.getHours()).padStart(2, '0');
   const m = String(beijing.getMinutes()).padStart(2, '0');
   const s = String(beijing.getSeconds()).padStart(2, '0');
   
-  document.getElementById('clockTime').innerHTML = `${h}<span class="seconds-blink">:</span>${m}<span class="seconds-blink">:</span>${s}`;
+  clockTime.innerHTML = `${h}<span class="seconds-blink">:</span>${m}<span class="seconds-blink">:</span>${s}`;
   
   const weekdays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
   const y = beijing.getFullYear();
@@ -42,14 +46,60 @@ function updateBeijingClock() {
   const d = beijing.getDate();
   const wd = weekdays[beijing.getDay()];
   
-  document.getElementById('clockDate').textContent = `${y} 年 ${mo} 月 ${d} 日 · ${wd}`;
+  clockDate.textContent = `${y} 年 ${mo} 月 ${d} 日 · ${wd}`;
 }
 
-// 页面加载后启动时钟
-if (document.getElementById('beijingClock')) {
-  updateBeijingClock();
-  setInterval(updateBeijingClock, 1000);
+// ===== 线性时间表 =====
+function updateTimelineBar() {
+  const progress = document.getElementById('tlProgress');
+  const marker = document.getElementById('tlMarker');
+  const labels = document.getElementById('tlLabels');
+  if (!progress || !marker || !labels) return;
+  
+  const beijing = getBeijingTime();
+  const h = beijing.getHours();
+  const m = beijing.getMinutes();
+  const s = beijing.getSeconds();
+  
+  // 计算当天进度百分比 (0~24小时)
+  const totalMinutes = h * 60 + m + s / 60;
+  const pct = Math.min((totalMinutes / (24 * 60)) * 100, 100);
+  
+  // 更新进度条
+  progress.style.width = pct + '%';
+  marker.textContent = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+  
+  // 更新标记位置 (让标记始终在进度条末端)
+  marker.style.left = `calc(${pct}% - 2px)`;
+  
+  // 生成小时刻度 (只生成一次)
+  if (!labels.dataset.ready) {
+    labels.dataset.ready = 'true';
+    let html = '';
+    for (let i = 0; i <= 24; i++) {
+      const label = i === 24 ? '24' : String(i);
+      const current = i === h;
+      html += `<span class="tl-label${current ? ' active' : ''}" style="left:${(i / 24) * 100}%">${label}</span>`;
+    }
+    labels.innerHTML = html;
+  }
+  
+  // 高亮当前小时
+  labels.querySelectorAll('.tl-label').forEach((el, idx) => {
+    el.classList.toggle('active', idx === h);
+  });
 }
+
+// 页面加载后启动时钟和时间表
+function initTimeDisplay() {
+  if (!document.getElementById('timeSection')) return;
+  updateBeijingClock();
+  updateTimelineBar();
+  setInterval(updateBeijingClock, 1000);
+  setInterval(updateTimelineBar, 10000);  // 每10秒更新一次时间表进度
+}
+
+initTimeDisplay();
 // ===== 博客数据加载 =====
 async function loadPosts() {
   const res = await fetch('data/posts.json');

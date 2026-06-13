@@ -43,10 +43,19 @@
     </div>
 
     <!-- ===== 北京时钟 ===== -->
-    <div class="beijing-clock fade-in fade-in-d1" id="beijingClock">
-      <div class="clock-label">✦ 北京时间</div>
-      <div class="clock-time" id="clockTime">--:--:--</div>
-      <div class="clock-date" id="clockDate">----年--月--日 星期-</div>
+    <div class="time-section fade-in fade-in-d1" id="timeSection">
+      <div class="beijing-clock" id="beijingClock">
+        <div class="clock-label">✦ 北京时间</div>
+        <div class="clock-time" id="clockTime">--:--:--</div>
+        <div class="clock-date" id="clockDate">----年--月--日 星期-</div>
+      </div>
+      <div class="timeline-bar-container" id="timelineBar">
+        <div class="timeline-bar-track">
+          <div class="timeline-bar-progress" id="tlProgress"></div>
+          <div class="timeline-bar-marker" id="tlMarker">▸ 当前</div>
+        </div>
+        <div class="timeline-bar-labels" id="tlLabels"></div>
+      </div>
     </div>
 
     <div class="section-header fade-in fade-in-d1">
