@@ -3,13 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>关于 - 我的博客</title>
+  <title>关于 · 溪言笔记</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <header>
     <div class="header-inner">
-      <a href="/" class="logo">My<span>Blog</span></a>
+      <a href="/" class="logo">
+        <span class="logo-icon">✧</span>
+        <span>溪言</span><span>笔记</span>
+      </a>
       <nav>
         <a href="/">首页</a>
         <a href="/about.html" class="active">关于</a>
@@ -19,17 +22,54 @@
   </header>
 
   <main>
-    <div class="about-page fade-in">
-      <h1>关于我</h1>
-      <p>你好！欢迎来到我的个人博客。这里是一个记录思考、分享知识的小角落。</p>
-      <p>我热爱学习和探索，这个博客将记录我在编程、技术、阅读和生活中的各种想法和收获。</p>
-      <p>如果你有任何问题或者想和我交流，欢迎在文章下留言，或者通过邮箱与我联系。</p>
-      <p style="margin-top: 32px; font-style: italic; color: var(--text-secondary);">感谢你的到访 ?</p>
+    <div class="about-hero fade-in">
+      <div class="about-avatar">✧</div>
+      <h1>关于我和这里</h1>
+      <p>一个喜欢写字的人，和一片小小的自留地。</p>
+    </div>
+
+    <div class="about-page">
+      <div class="about-section fade-in fade-in-d1">
+        <h2><span class="section-icon">📝</span> 关于这个博客</h2>
+        <p>你好！欢迎来到我的个人博客。这里是一个记录思考、分享知识的小角落。</p>
+        <p>这个博客用纯粹的 HTML、CSS 和 JavaScript 构建，没有使用任何框架。每一行代码都清晰可见，就像这里的每一篇文章都真诚可感。</p>
+      </div>
+
+      <div class="about-section fade-in fade-in-d2">
+        <h2><span class="section-icon">🎯</span> 我在写什么</h2>
+        <p>这里的内容主要围绕三个方面：</p>
+        <p><strong>技术笔记</strong> — 学习编程和新技术时的总结与思考<br>
+        <strong>读书笔记</strong> — 读到的好书摘录和个人感悟<br>
+        <strong>生活随想</strong> — 一些零碎的、不愿被遗忘的想法</p>
+      </div>
+
+      <div class="about-section fade-in fade-in-d3">
+        <h2><span class="section-icon">📬</span> 联系我</h2>
+        <p>如果你有任何问题，或者只是想打个招呼，欢迎通过以下方式找到我：</p>
+        <div class="about-links">
+          <a href="#">✉ 发送邮件</a>
+          <a href="#">⌘ GitHub</a>
+          <a href="/">🏠 回到首页</a>
+        </div>
+      </div>
+
+      <div class="about-quote fade-in">
+        "写作不是为了记录答案，而是为了提出更好的问题。"
+      </div>
     </div>
   </main>
 
   <footer>
-    <p>&copy; 2026 MyBlog. All rights reserved.</p>
+    <div class="footer-inner">
+      <div class="footer-brand"><span>溪言</span>笔记</div>
+      <div class="footer-text">在文字里，遇见自己。</div>
+      <div class="footer-social">
+        <a href="#" title="GitHub" aria-label="GitHub">⌘</a>
+        <a href="#" title="Email" aria-label="Email">✉</a>
+        <a href="/about.html" title="关于" aria-label="关于">◈</a>
+      </div>
+      <div class="footer-copy">&copy; 2026 溪言笔记. All rights reserved.</div>
+    </div>
   </footer>
 
   <script src="js/main.js"></script>

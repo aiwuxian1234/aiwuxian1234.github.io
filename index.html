@@ -3,13 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>我的博客</title>
+  <title>溪言笔记 · 记录思考，分享想法</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <header>
     <div class="header-inner">
-      <a href="/" class="logo">My<span>Blog</span></a>
+      <a href="/" class="logo">
+        <span class="logo-icon">✧</span>
+        <span>溪言</span><span>笔记</span>
+      </a>
       <nav>
         <a href="/" class="active">首页</a>
         <a href="/about.html">关于</a>
@@ -19,15 +22,45 @@
   </header>
 
   <main id="app">
-    <div class="hero">
-      <h1>你好，欢迎来到我的博客</h1>
-      <p>记录思考，分享想法。这里是我的文字世界。</p>
+    <div class="hero fade-in">
+      <div class="hero-badge">✦ 记录 · 思考 · 分享</div>
+      <h1>在文字里，遇见自己</h1>
+      <p>一个安静的角落，用来安放那些值得被记住的想法。<br>不追热点，不赶潮流，只写真正想写的东西。</p>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-number" id="postCount">0</div>
+          <div class="stat-label">篇文章</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="tagCount">0</div>
+          <div class="stat-label">个标签</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="updateInfo">-</div>
+          <div class="stat-label">最近更新</div>
+        </div>
+      </div>
     </div>
+
+    <div class="section-header fade-in fade-in-d1">
+      <h2>最新文章</h2>
+      <span class="section-line"></span>
+    </div>
+
     <div id="postList" class="post-list"></div>
   </main>
 
   <footer>
-    <p>&copy; 2026 MyBlog. All rights reserved.</p>
+    <div class="footer-inner">
+      <div class="footer-brand"><span>溪言</span>笔记</div>
+      <div class="footer-text">在文字里，遇见自己。</div>
+      <div class="footer-social">
+        <a href="#" title="GitHub" aria-label="GitHub">⌘</a>
+        <a href="#" title="Email" aria-label="Email">✉</a>
+        <a href="/about.html" title="关于" aria-label="关于">◈</a>
+      </div>
+      <div class="footer-copy">&copy; 2026 溪言笔记. All rights reserved.</div>
+    </div>
   </footer>
 
   <script src="js/main.js"></script>
