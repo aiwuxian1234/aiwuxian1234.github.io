@@ -19,6 +19,37 @@
   }
 })();
 
+
+// ===== 北京时钟 =====
+function updateBeijingClock() {
+  const clockEl = document.getElementById('beijingClock');
+  if (!clockEl) return;
+  
+  const now = new Date();
+  // 转换为北京时间 (UTC+8)
+  const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+  const beijing = new Date(utc + 8 * 3600000);
+  
+  const h = String(beijing.getHours()).padStart(2, '0');
+  const m = String(beijing.getMinutes()).padStart(2, '0');
+  const s = String(beijing.getSeconds()).padStart(2, '0');
+  
+  document.getElementById('clockTime').innerHTML = `${h}<span class="seconds-blink">:</span>${m}<span class="seconds-blink">:</span>${s}`;
+  
+  const weekdays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+  const y = beijing.getFullYear();
+  const mo = beijing.getMonth() + 1;
+  const d = beijing.getDate();
+  const wd = weekdays[beijing.getDay()];
+  
+  document.getElementById('clockDate').textContent = `${y} 年 ${mo} 月 ${d} 日 · ${wd}`;
+}
+
+// 页面加载后启动时钟
+if (document.getElementById('beijingClock')) {
+  updateBeijingClock();
+  setInterval(updateBeijingClock, 1000);
+}
 // ===== 博客数据加载 =====
 async function loadPosts() {
   const res = await fetch('data/posts.json');
@@ -49,18 +80,30 @@ function getRelativeDate(dateStr) {
 function renderPostCard(post, index) {
   const tagsHTML = (post.tags || []).map(t => `<span class="tag">${t}</span>`).join('');
   const delayClass = index === 0 ? '' : index === 1 ? ' fade-in-d2' : index === 2 ? ' fade-in-d3' : '';
+  const d = new Date(post.date);
+  const day = d.getDate();
+  const month = d.getMonth() + 1;
+  const year = d.getFullYear();
   return `
-    <div class="post-card fade-in${delayClass}" data-slug="${post.slug}">
-      <div class="meta">
-        <span>${formatDate(post.date)}</span>
-        <span class="dot"></span>
-        <span>${getRelativeDate(post.date)}</span>
-        ${post.readTime ? `<span class="dot"></span><span>${post.readTime}</span>` : ''}
+    <div class="timeline-item fade-in${delayClass}" data-slug="${post.slug}">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">
+        <span class="tl-day">${day}</span>
+        <span class="tl-month">${month}月</span>
+        <span class="tl-year">${year}</span>
       </div>
-      ${tagsHTML ? `<div class="tags">${tagsHTML}</div>` : ''}
-      <h2>${post.title}</h2>
-      <p class="excerpt">${post.excerpt || ''}</p>
-      <span class="read-more">阅读全文 →</span>
+      <div class="timeline-content">
+        <div class="post-card">
+          <div class="meta">
+            <span>${formatDate(post.date)}</span>
+            ${post.readTime ? `<span class="dot"></span><span>${post.readTime}</span>` : ''}
+          </div>
+          ${tagsHTML ? `<div class="tags">${tagsHTML}</div>` : ''}
+          <h2>${post.title}</h2>
+          <p class="excerpt">${post.excerpt || ''}</p>
+          <span class="read-more">阅读全文 →</span>
+        </div>
+      </div>
     </div>
   `;
 }
@@ -100,7 +143,7 @@ if (postListEl) {
       postListEl.innerHTML = sorted.map((post, idx) => renderPostCard(post, idx)).join('');
 
       // 点击跳转 + 微交互
-      document.querySelectorAll('.post-card').forEach(card => {
+      document.querySelectorAll('.timeline-item').forEach(card => {
         card.addEventListener('click', () => {
           const slug = card.dataset.slug;
           card.style.transform = 'scale(0.98)';
@@ -208,3 +251,6 @@ function setupRevealObserver() {
 document.addEventListener('DOMContentLoaded', () => {
   setTimeout(setupRevealObserver, 100);
 });
+
+
+
